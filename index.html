@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArteYA - Presentación</title>
+    <title>Music Preference Survey Analysis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,261 +14,131 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #6c5ce7 0%, #fd79a8 50%, #fdcb6e 100%);
-            overflow-x: hidden;
-        }
-
-        .presentation-container {
-            max-width: 100vw;
-            position: relative;
-        }
-
-        .slide {
+            background: linear-gradient(135deg, #f5f3ff 0%, #fce7f3 100%);
             min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            margin: 1rem auto;
-            max-width: 1200px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
         }
 
         h1 {
-            font-size: 4rem;
-            color: #2d3748;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease-out;
+            font-size: 2.5rem;
+            color: #7c3aed;
+            margin-bottom: 10px;
         }
 
-        h2 {
-            font-size: 2.8rem;
-            color: #2d3748;
-            margin-bottom: 2rem;
-            border-bottom: 3px solid #6c5ce7;
-            padding-bottom: 0.5rem;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        h3 {
-            font-size: 2rem;
-            color: #4a5568;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-
-        p, li {
-            font-size: 1.3rem;
-            color: #4a5568;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        .logo {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            animation: bounceIn 1s ease-out;
-        }
-
-        .highlight {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-            width: 100%;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            color: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 1s ease-out forwards;
-            text-align: center;
-        }
-
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.4s; }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-            width: 100%;
-        }
-
-        .problem-card {
-            background: rgba(244, 67, 54, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid #f44336;
-            transform: translateX(-20px);
-            opacity: 0;
-            animation: slideInRight 1s ease-out forwards;
-        }
-
-        .problem-card:nth-child(2) { animation-delay: 0.2s; }
-        .problem-card:nth-child(3) { animation-delay: 0.4s; }
-
-        .solution-card {
-            background: rgba(76, 175, 80, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid #4caf50;
-            transform: translateX(-20px);
-            opacity: 0;
-            animation: slideInRight 1s ease-out forwards;
-        }
-
-        .flow-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 2rem 0;
-            max-width: 1000px;
-        }
-
-        .flow-step {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 121, 168, 0.1));
-            padding: 1.5rem;
-            border-radius: 15px;
-            border: 2px solid #6c5ce7;
-            min-width: 200px;
-            text-align: center;
-            transform: scale(0);
-            animation: popIn 0.8s ease-out forwards;
-        }
-
-        .flow-step:nth-child(2) { animation-delay: 0.2s; }
-        .flow-step:nth-child(3) { animation-delay: 0.4s; }
-        .flow-step:nth-child(4) { animation-delay: 0.6s; }
-
-        .flow-arrow {
-            font-size: 2rem;
-            color: #6c5ce7;
-            margin: 0 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        .example-box {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 203, 110, 0.1));
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            border: 3px solid #6c5ce7;
-            max-width: 800px;
-        }
-
-        .roadmap-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-            width: 100%;
-        }
-
-        .roadmap-phase {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 121, 168, 0.1));
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid #6c5ce7;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 1s ease-out forwards;
-        }
-
-        .roadmap-phase:nth-child(2) { animation-delay: 0.3s; }
-        .roadmap-phase:nth-child(3) { animation-delay: 0.6s; }
-
-        .cta-button {
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
-            color: white;
-            padding: 2rem 4rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 2rem;
-            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(108, 92, 231, 0.4);
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            background: rgba(0,0,0,0.7);
-            padding: 1rem;
-            border-radius: 25px;
-            z-index: 1000;
-        }
-
-        .nav-dot {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-dot.active {
-            background: #6c5ce7;
-            transform: scale(1.4);
-        }
-
-        .slide-number {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            background: rgba(108, 92, 231, 0.1);
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            color: #4a5568;
-            font-weight: bold;
+        .subtitle {
+            color: #6b7280;
             font-size: 1.1rem;
         }
 
-        @keyframes fadeInUp {
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chart-title {
+            font-size: 1.4rem;
+            color: #7c3aed;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            margin-bottom: 15px;
+        }
+
+        .insight {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #4b5563;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .insight strong {
+            color: #7c3aed;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in 0.3s both;
+        }
+
+        .summary h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .summary-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-section li {
+            padding: 6px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -278,284 +149,421 @@
             }
         }
 
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .chart-container {
+                padding: 20px;
             }
         }
 
-        @keyframes slideInRight {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes popIn {
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .big-number {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #6c5ce7;
-            margin: 1rem 0;
+        .full-width {
+            grid-column: 1 / -1;
         }
     </style>
 </head>
 <body>
-    <div class="presentation-container">
-        <!-- Slide 1: Problema -->
-        <div class="slide" id="slide1">
-            <div class="slide-number">1/5</div>
-            <div class="logo">🎨📱💸</div>
-            <h2>❌ El Problema Real</h2>
-            <h3>Contratar artistas hoy es <span class="highlight">riesgoso e informal</span></h3>
-            
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <h3>💬 Sin Garantías</h3>
-                    <p>Contratación por DM de Instagram<br>No hay contratos ni protección</p>
-                </div>
-                <div class="problem-card">
-                    <h3>💰 Pagos Inseguros</h3>
-                    <p>Transferencias adelantadas sin confirmación<br>Riesgo para cliente y artista</p>
-                </div>
-                <div class="problem-card">
-                    <h3>🤷‍♂️ Calidad Inconsistente</h3>
-                    <p>Sin reviews, sin verificación<br>No sabes qué esperar</p>
-                </div>
-            </div>
-            
-            <div class="example-box">
-                <h3>📊 Realidad del Mercado:</h3>
-                <p><strong>36% de mexicanos son freelancers</strong> - mayoría sin protecciones</p>
-                <p><strong>85% contrata por redes sociales</strong> - sin garantías formales</p>
-            </div>
-        </div>
+    <div class="container">
+        <header>
+            <h1>🎵 Music Preference Survey Analysis</h1>
+            <p class="subtitle">Survey of 10 Personas - Latin America Region</p>
+        </header>
 
-        <!-- Slide 2: Solución -->
-        <div class="slide" id="slide2">
-            <div class="slide-number">2/5</div>
-            <div class="logo">🎨✨</div>
-            <h1>ArteYA</h1>
-            <h3 class="highlight">Plataforma que conecta clientes con artistas locales de forma rápida, segura y con garantías</h3>
-            
-            <div class="stats-grid">
-                <div class="solution-card">
-                    <h3>🛡️ Para Clientes</h3>
-                    <p><strong>Contratar talento local</strong><br>Rápido, seguro y con garantías</p>
+        <div class="chart-grid">
+            <!-- Q1: Primary Genre -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q1: Primary Music Genre</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q1Chart"></canvas>
                 </div>
-                <div class="solution-card">
-                    <h3>💼 Para Artistas</h3>
-                    <p><strong>Trabajos reales</strong><br>Pagos protegidos y visibilidad</p>
+                <div class="insight">
+                    <strong>Insight:</strong> Pop and Rock tie as most popular primary genres (30% each), followed by Hip-Hop/Rap and Electronic/EDM (20% each)
                 </div>
             </div>
 
-            <div class="example-box">
-                <h3>🎯 Servicios Cubiertos:</h3>
-                <p><strong>📸 Fotografía</strong> • <strong>🎨 Ilustración</strong> • <strong>🏢 Murales</strong> • <strong>🎵 DJs</strong> • <strong>📱 Diseño Digital</strong></p>
-            </div>
-        </div>
-
-        <!-- Slide 3: Cómo Funciona -->
-        <div class="slide" id="slide3">
-            <div class="slide-number">3/5</div>
-            <h2>⚙️ Súper Simple</h2>
-            <h3>4 pasos para contratar artistas <span class="highlight">sin riesgo</span></h3>
-            
-            <div class="flow-container">
-                <div class="flow-step">
-                    <h3>1️⃣ Buscar</h3>
-                    <p>Filtra por precio, ubicación y reviews</p>
+            <!-- Q2: Secondary Genre -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q2: Secondary Genre</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q2Chart"></canvas>
                 </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <h3>2️⃣ Reservar</h3>
-                    <p>Selecciona artista y horario</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <h3>3️⃣ Pagar</h3>
-                    <p>Dinero retenido en custodia</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <h3>4️⃣ Confirmar</h3>
-                    <p>Trabajo terminado = pago liberado</p>
+                <div class="insight">
+                    <strong>Insight:</strong> Lo-fi leads at 40%, showing it's a popular secondary/background genre
                 </div>
             </div>
 
-            <div class="example-box">
-                <h3>📝 Ejemplo Real:</h3>
-                <p><strong>Cliente necesita:</strong> Sesión de fotos (1 hora)</p>
-                <p><strong>Encuentra fotógrafo:</strong> Con buenas reviews, tarifa $600</p>
-                <p><strong>Reserva y paga:</strong> $600 retenidos en custodia</p>
-                <p><strong>Resultado:</strong> Fotos entregadas → $510 al artista, $90 a ArteYA</p>
-            </div>
-        </div>
-
-        <!-- Slide 4: Modelo y Números -->
-        <div class="slide" id="slide4">
-            <div class="slide-number">4/5</div>
-            <h2>💰 Modelo y Números Reales</h2>
-            <div class="big-number">15% comisión</div>
-            <h3>Por cada transacción completada</h3>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number">$600</span>
-                    <p>Precio promedio por servicio</p>
+            <!-- Q3: Listening Context -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q3: Listening Context</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q3Chart"></canvas>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">124</span>
-                    <p>Reservas/mes para punto de equilibrio</p>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">$80K</span>
-                    <p>Inversión inicial necesaria</p>
+                <div class="insight">
+                    <strong>Insight:</strong> Work/study and travel contexts dominate (30% each)
                 </div>
             </div>
 
-            <div class="example-box">
-                <h3>📈 Proyección Conservadora (Mensual):</h3>
-                <p><strong>40 reservas</strong> × $600 promedio = $24,000 MXN procesados</p>
-                <p><strong>Ingresos ArteYA:</strong> $3,600 comisiones + $1,490 planes PRO = <strong>$5,090 MXN</strong></p>
-                <p><strong>Costos operativos:</strong> $11,760 MXN → <strong>Pérdida inicial aceptable mientras escalamos</strong></p>
+            <!-- Q4: Device -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q4: Listening Device</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q4Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> Smartphones dominate at 60%, showing mobile-first listening habits
+                </div>
+            </div>
+
+            <!-- Q5: Artist Type -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q5: Preferred Artist Type</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q5Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> Even split between solo singers and bands (30% each)
+                </div>
+            </div>
+
+            <!-- Q6: Language -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q6: Language Preference</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q6Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> English slightly leads (50%), but Spanish is strong (40%)
+                </div>
+            </div>
+
+            <!-- Q7: Frequency -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q7: Listening Frequency</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q7Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> 80% listen every day - highly engaged audience!
+                </div>
+            </div>
+
+            <!-- Q8: What Matters -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q8: What Matters Most in Music</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q8Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> Rhythm/beat leads (40%), but lyrics and message/feeling are equally valued (30% each)
+                </div>
+            </div>
+
+            <!-- Q9: Discovery Method -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q9: Music Discovery Method</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q9Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> Streaming apps dominate discovery (50%), followed by social media (30%)
+                </div>
+            </div>
+
+            <!-- Q10: Genre to Explore -->
+            <div class="chart-container">
+                <h2 class="chart-title">Q10: Genre to Explore</h2>
+                <div class="chart-wrapper">
+                    <canvas id="q10Chart"></canvas>
+                </div>
+                <div class="insight">
+                    <strong>Insight:</strong> Latin/Reggaeton and Jazz/Blues tie for exploration interest (40% each)
+                </div>
             </div>
         </div>
 
-        <!-- Slide 5: MVP y Acción -->
-        <div class="slide" id="slide5">
-            <div class="slide-number">5/5</div>
-            <h2>🚀 MVP en 90 Días</h2>
-            
-            <div class="roadmap-container">
-                <div class="roadmap-phase">
-                    <h3>📅 Días 0-30</h3>
-                    <p><strong>Fundación</strong><br>
-                    • Desarrollo MVP<br>
-                    • 50 artistas registrados<br>
-                    • 10 reservas piloto</p>
+        <!-- Key Findings Summary -->
+        <div class="summary">
+            <h2>📊 Key Findings Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-section">
+                    <h3>🎯 Audience Profile:</h3>
+                    <ul>
+                        <li>• Highly engaged: 80% listen daily</li>
+                        <li>• Mobile-first: 60% use smartphones</li>
+                        <li>• Bilingual: English (50%) & Spanish (40%)</li>
+                        <li>• Genre diversity: Pop, Rock, Hip-Hop, EDM</li>
+                    </ul>
                 </div>
-                <div class="roadmap-phase">
-                    <h3>📅 Días 30-60</h3>
-                    <p><strong>Validación</strong><br>
-                    • Pagos + chat integrados<br>
-                    • 50 clientes reales<br>
-                    • Marketing orgánico</p>
-                </div>
-                <div class="roadmap-phase">
-                    <h3>📅 Días 60-90</h3>
-                    <p><strong>Crecimiento</strong><br>
-                    • Optimización UX<br>
-                    • 3 alianzas estratégicas<br>
-                    • KPIs establecidos</p>
+                <div class="summary-section">
+                    <h3>🔍 Behavioral Insights:</h3>
+                    <ul>
+                        <li>• Lo-fi popular for background listening</li>
+                        <li>• Rhythm matters more than lyrics</li>
+                        <li>• Streaming apps drive discovery (50%)</li>
+                        <li>• Interest in Latin/Reggaeton & Jazz/Blues</li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="example-box">
-                <h3>💼 Lo Que Necesitamos:</h3>
-                <p><strong>Desarrollo:</strong> $45K MXN (1 frontend + 1 backend + 1 diseñador)</p>
-                <p><strong>Marketing:</strong> $25K MXN (campañas + contenido + influencers)</p>
-                <p><strong>Operaciones:</strong> $10K MXN (legal + hosting + tools)</p>
-            </div>
-
-            <button class="cta-button">¡Construyamos ArteYA Juntos!</button>
-            <p style="margin-top: 2rem; font-style: italic; font-size: 1.1rem;">
-                Donde el talento local encuentra oportunidades reales
-            </p>
         </div>
-    </div>
-
-    <div class="navigation">
-        <div class="nav-dot active" onclick="showSlide(1)"></div>
-        <div class="nav-dot" onclick="showSlide(2)"></div>
-        <div class="nav-dot" onclick="showSlide(3)"></div>
-        <div class="nav-dot" onclick="showSlide(4)"></div>
-        <div class="nav-dot" onclick="showSlide(5)"></div>
     </div>
 
     <script>
-        let currentSlide = 1;
-        const totalSlides = 5;
+        // Consistent colors
+        const colors = {
+            purple: '#8b5cf6',
+            pink: '#ec4899',
+            amber: '#f59e0b',
+            green: '#10b981',
+            blue: '#3b82f6',
+            red: '#ef4444',
+            teal: '#14b8a6',
+            orange: '#f97316'
+        };
 
-        function showSlide(n) {
-            currentSlide = n;
-            
-            // Hide all slides
-            for (let i = 1; i <= totalSlides; i++) {
-                document.getElementById(`slide${i}`).style.display = 'none';
+        const chartColors = [
+            colors.purple,
+            colors.pink,
+            colors.amber,
+            colors.green,
+            colors.blue,
+            colors.red,
+            colors.teal,
+            colors.orange
+        ];
+
+        // Common configuration
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
             }
-            
-            // Show current slide
-            document.getElementById(`slide${currentSlide}`).style.display = 'flex';
-            
-            // Update navigation
-            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index + 1 === currentSlide);
-            });
-        }
+        };
 
-        // Initialize
-        showSlide(1);
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
-                showSlide(currentSlide + 1);
-            } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
-                showSlide(currentSlide - 1);
+        // Q1: Primary Genre
+        new Chart(document.getElementById('q1Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Pop', 'Rock', 'Hip-Hop/Rap', 'Electronic/EDM'],
+                datasets: [{
+                    data: [3, 3, 2, 2],
+                    backgroundColor: colors.purple,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
             }
         });
 
-        // Spacebar advance
-        document.addEventListener('keydown', (e) => {
-            if (e.key === ' ' && currentSlide < totalSlides) {
-                e.preventDefault();
-                showSlide(currentSlide + 1);
+        // Q2: Secondary Genre
+        new Chart(document.getElementById('q2Chart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Lo-fi', 'Jazz', 'Acoustic/Indie', 'Classical'],
+                datasets: [{
+                    data: [4, 3, 2, 1],
+                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2], chartColors[3]]
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
             }
         });
 
-        // Auto-advance animation for flow steps
-        setInterval(() => {
-            const flowSteps = document.querySelectorAll('.flow-step');
-            flowSteps.forEach((step, index) => {
-                setTimeout(() => {
-                    step.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        step.style.transform = 'scale(1)';
-                    }, 200);
-                }, index * 150);
-            });
-        }, 8000);
+        // Q3: Listening Context
+        new Chart(document.getElementById('q3Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Studying/Working', 'Traveling', 'Exercise', 'Before sleeping'],
+                datasets: [{
+                    data: [3, 3, 2, 2],
+                    backgroundColor: colors.pink,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Q4: Device
+        new Chart(document.getElementById('q4Chart'), {
+            type: 'pie',
+            data: {
+                labels: ['Smartphone', 'Computer', 'Smart speaker'],
+                datasets: [{
+                    data: [6, 3, 1],
+                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2]]
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Q5: Artist Type
+        new Chart(document.getElementById('q5Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Solo singer', 'Band/Group', 'Rapper', 'DJ/Producer'],
+                datasets: [{
+                    data: [3, 3, 2, 2],
+                    backgroundColor: colors.green,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Q6: Language
+        new Chart(document.getElementById('q6Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['English', 'Spanish', 'Other'],
+                datasets: [{
+                    data: [5, 4, 1],
+                    backgroundColor: colors.blue,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Q7: Frequency
+        new Chart(document.getElementById('q7Chart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Every day', 'Few times/week'],
+                datasets: [{
+                    data: [8, 2],
+                    backgroundColor: [chartColors[0], chartColors[1]]
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Q8: What Matters
+        new Chart(document.getElementById('q8Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Rhythm/Beat', 'The lyrics', 'Message/Feeling'],
+                datasets: [{
+                    data: [4, 3, 3],
+                    backgroundColor: colors.amber,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Q9: Discovery Method
+        new Chart(document.getElementById('q9Chart'), {
+            type: 'pie',
+            data: {
+                labels: ['Streaming apps', 'Social media', 'Friends/Family'],
+                datasets: [{
+                    data: [5, 3, 2],
+                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2]]
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Q10: Genre to Explore
+        new Chart(document.getElementById('q10Chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Latin/Reggaeton', 'Jazz/Blues', 'Metal/Rock', 'K-Pop/J-Pop'],
+                datasets: [{
+                    data: [4, 4, 1, 1],
+                    backgroundColor: colors.red,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
