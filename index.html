@@ -1,569 +1,308 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Preference Survey Analysis</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <title>Propuesta de Página Web para Radio en Línea – Daniel SoftWorks</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f3ff 0%, #fce7f3 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+            font-size: 14px;
+            padding: 2cm;
         }
-
-        .container {
-            max-width: 1400px;
+        
+        .page {
+            max-width: 100%;
             margin: 0 auto;
         }
-
-        header {
+        
+        .header {
             text-align: center;
-            margin-bottom: 40px;
-            animation: fadeIn 1s ease-in;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
         }
-
+        
         h1 {
-            font-size: 2.5rem;
-            color: #7c3aed;
+            color: #1E3A8A;
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 10px;
         }
-
+        
         .subtitle {
-            color: #6b7280;
-            font-size: 1.1rem;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #374151;
         }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 30px;
+        
+        .client-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        
+        .section {
             margin-bottom: 30px;
+            page-break-inside: avoid;
         }
-
-        .chart-container {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: slideUp 0.6s ease-out;
+        
+        h2 {
+            color: #1E3A8A;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E5E7EB;
         }
-
-        .chart-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
         }
-
-        .chart-title {
-            font-size: 1.4rem;
-            color: #7c3aed;
+        
+        ul {
+            margin-left: 20px;
             margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        th {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px;
+            text-align: left;
             font-weight: 600;
         }
-
-        .chart-wrapper {
-            position: relative;
-            height: 300px;
-            margin-bottom: 15px;
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #E5E7EB;
         }
-
-        .insight {
-            background: #f3f4f6;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #4b5563;
-            border-left: 4px solid #7c3aed;
+        
+        tr:nth-child(even) {
+            background-color: #F9FAFB;
         }
-
-        .insight strong {
-            color: #7c3aed;
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #E5E7EB;
+            font-size: 12px;
+            color: #6B7280;
         }
-
-        .summary {
-            background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s ease-in 0.3s both;
+        
+        .highlight {
+            background-color: #F3F4F6;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
         }
-
-        .summary h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .summary-grid {
+        
+        .tech-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
-
-        .summary-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+        
+        .tech-item {
+            margin-bottom: 8px;
+        }
+        
+        .deliverables {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
         }
-
-        .summary-section ul {
-            list-style: none;
-            padding-left: 0;
+        
+        .deliverable {
+            background-color: #F0F9FF;
+            border: 1px solid #BAE6FD;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 13px;
         }
-
-        .summary-section li {
-            padding: 6px 0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+        
+        @media print {
+            body {
+                padding: 2cm;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .chart-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .chart-container {
-                padding: 20px;
-            }
-        }
-
-        .full-width {
-            grid-column: 1 / -1;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎵 Music Preference Survey Analysis</h1>
-            <p class="subtitle">Survey of 10 Personas - Latin America Region</p>
-        </header>
-
-        <div class="chart-grid">
-            <!-- Q1: Primary Genre -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q1: Primary Music Genre</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q1Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Pop and Rock tie as most popular primary genres (30% each), followed by Hip-Hop/Rap and Electronic/EDM (20% each)
-                </div>
-            </div>
-
-            <!-- Q2: Secondary Genre -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q2: Secondary Genre</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q2Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Lo-fi leads at 40%, showing it's a popular secondary/background genre
-                </div>
-            </div>
-
-            <!-- Q3: Listening Context -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q3: Listening Context</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q3Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Work/study and travel contexts dominate (30% each)
-                </div>
-            </div>
-
-            <!-- Q4: Device -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q4: Listening Device</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q4Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Smartphones dominate at 60%, showing mobile-first listening habits
-                </div>
-            </div>
-
-            <!-- Q5: Artist Type -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q5: Preferred Artist Type</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q5Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Even split between solo singers and bands (30% each)
-                </div>
-            </div>
-
-            <!-- Q6: Language -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q6: Language Preference</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q6Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> English slightly leads (50%), but Spanish is strong (40%)
-                </div>
-            </div>
-
-            <!-- Q7: Frequency -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q7: Listening Frequency</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q7Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> 80% listen every day - highly engaged audience!
-                </div>
-            </div>
-
-            <!-- Q8: What Matters -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q8: What Matters Most in Music</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q8Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Rhythm/beat leads (40%), but lyrics and message/feeling are equally valued (30% each)
-                </div>
-            </div>
-
-            <!-- Q9: Discovery Method -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q9: Music Discovery Method</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q9Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Streaming apps dominate discovery (50%), followed by social media (30%)
-                </div>
-            </div>
-
-            <!-- Q10: Genre to Explore -->
-            <div class="chart-container">
-                <h2 class="chart-title">Q10: Genre to Explore</h2>
-                <div class="chart-wrapper">
-                    <canvas id="q10Chart"></canvas>
-                </div>
-                <div class="insight">
-                    <strong>Insight:</strong> Latin/Reggaeton and Jazz/Blues tie for exploration interest (40% each)
-                </div>
+    <div class="page">
+        <div class="header">
+            <h1>Propuesta de Página Web para Radio en Línea</h1>
+            <div class="subtitle">Daniel SoftWorks</div>
+            <div class="client-info">
+                <div><strong>Cliente:</strong> David</div>
+                <div><strong>Desarrollador:</strong> Daniel SoftWorks</div>
+                <div><strong>Ubicación:</strong> Guadalajara, Jalisco, México</div>
+                <div><strong>Fecha:</strong> Noviembre 2025</div>
             </div>
         </div>
-
-        <!-- Key Findings Summary -->
-        <div class="summary">
-            <h2>📊 Key Findings Summary</h2>
-            <div class="summary-grid">
-                <div class="summary-section">
-                    <h3>🎯 Audience Profile:</h3>
-                    <ul>
-                        <li>• Highly engaged: 80% listen daily</li>
-                        <li>• Mobile-first: 60% use smartphones</li>
-                        <li>• Bilingual: English (50%) & Spanish (40%)</li>
-                        <li>• Genre diversity: Pop, Rock, Hip-Hop, EDM</li>
-                    </ul>
-                </div>
-                <div class="summary-section">
-                    <h3>🔍 Behavioral Insights:</h3>
-                    <ul>
-                        <li>• Lo-fi popular for background listening</li>
-                        <li>• Rhythm matters more than lyrics</li>
-                        <li>• Streaming apps drive discovery (50%)</li>
-                        <li>• Interest in Latin/Reggaeton & Jazz/Blues</li>
-                    </ul>
-                </div>
+        
+        <div class="section">
+            <h2>1. Resumen Ejecutivo</h2>
+            <p>Daniel SoftWorks propone el desarrollo de una plataforma web profesional para una estación de radio en línea. El objetivo principal es ofrecer una experiencia moderna, funcional y fácil de administrar, que permita al público escuchar transmisiones en vivo, acceder a programas grabados (podcasts), leer artículos del blog y mantenerse conectado mediante redes sociales.</p>
+            <p>El proyecto integrará tecnología estable, diseño responsivo y herramientas de administración accesibles, garantizando escalabilidad y control total por parte del cliente.</p>
+        </div>
+        
+        <div class="section">
+            <h2>2. Alcance Funcional</h2>
+            <p>El sitio incluirá las siguientes características:</p>
+            <ul>
+                <li>Transmisión en vivo con reproductor web integrado.</li>
+                <li>Integración con redes sociales para difusión automática y contenido embebido.</li>
+                <li>Sección institucional con misión, visión y objetivos.</li>
+                <li>Parrilla programática editable.</li>
+                <li>Sección de podcasts con reproductor y descarga.</li>
+                <li>Blog o noticias.</li>
+                <li>Panel de administración fácil de usar.</li>
+                <li>Diseño responsivo para móviles, tablets y computadoras.</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>3. Arquitectura General del Sitio</h2>
+            <p><strong>Menú Principal:</strong> Inicio, En Vivo, Programación, Podcasts, Blog/Noticias, Nosotros, Contacto.</p>
+            <p><strong>Estructura Interna:</strong></p>
+            <ul>
+                <li><strong>Inicio:</strong> reproductor principal, destacados y enlaces rápidos.</li>
+                <li><strong>En Vivo:</strong> streaming con metadatos del programa actual.</li>
+                <li><strong>Programación:</strong> parrilla editable.</li>
+                <li><strong>Podcasts:</strong> listado de episodios.</li>
+                <li><strong>Blog:</strong> artículos y comunicados.</li>
+                <li><strong>Nosotros:</strong> misión, visión y equipo.</li>
+                <li><strong>Contacto:</strong> formulario y redes sociales.</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>4. Tecnologías Recomendadas</h2>
+            <div class="tech-list">
+                <div class="tech-item"><strong>Frontend:</strong> HTML5, CSS3, JavaScript (ES6+), Tailwind CSS</div>
+                <div class="tech-item"><strong>Framework:</strong> Next.js o Nuxt.js</div>
+                <div class="tech-item"><strong>Backend/CMS:</strong> Strapi o WordPress Headless</div>
+                <div class="tech-item"><strong>Reproductor:</strong> Plyr.js o WaveSurfer.js</div>
+                <div class="tech-item"><strong>Base de datos:</strong> PostgreSQL o MySQL</div>
+                <div class="tech-item"><strong>Hosting:</strong> VPS (DigitalOcean / Hostinger Pro)</div>
+                <div class="tech-item"><strong>Seguridad:</strong> HTTPS con SSL (Let's Encrypt)</div>
             </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Integraciones Externas</h2>
+            <ul>
+                <li>Icecast / Shoutcast para transmisión en vivo.</li>
+                <li>Spotify / Apple Podcasts para distribución.</li>
+                <li>RSS automático para podcasts y noticias.</li>
+                <li>Redes sociales (Facebook, Instagram, X).</li>
+                <li>Google Analytics para métricas del sitio.</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>6. Estimación de Tiempos (por etapas)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Etapa</th>
+                        <th>Descripción</th>
+                        <th>Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Planificación y diseño UI/UX</td>
+                        <td>7 días</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Configuración de servidor, dominio y CMS</td>
+                        <td>5 días</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Desarrollo frontend + player en vivo</td>
+                        <td>10 días</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Backend y administración de parrilla</td>
+                        <td>7 días</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Podcasts, blog e integraciones</td>
+                        <td>6 días</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Pruebas y optimización final</td>
+                        <td>4 días</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Entrega y capacitación</td>
+                        <td>2 días</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Duración total estimada:</strong> 6 a 7 semanas (según revisiones y contenido del cliente).</p>
+        </div>
+        
+        <div class="section">
+            <h2>7. Entregables</h2>
+            <div class="deliverables">
+                <div class="deliverable">✓ Sitio web completo y funcional</div>
+                <div class="deliverable">✓ Panel de administración listo para uso</div>
+                <div class="deliverable">✓ Manual de usuario en PDF</div>
+                <div class="deliverable">✓ Accesos a hosting, CMS y dominios</div>
+                <div class="deliverable">✓ Código fuente en repositorio Git</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>8. Recomendaciones Técnicas</h2>
+            <ul>
+                <li>Usar servidor de streaming dedicado o servicio externo.</li>
+                <li>Implementar backups automáticos y CDN.</li>
+                <li>Publicar podcasts con metadatos ID3 correctos.</li>
+                <li>Mantener actualizaciones y soporte técnico periódico.</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            Daniel SoftWorks © 2025 | Propuesta Web Radio en Línea
         </div>
     </div>
-
-    <script>
-        // Consistent colors
-        const colors = {
-            purple: '#8b5cf6',
-            pink: '#ec4899',
-            amber: '#f59e0b',
-            green: '#10b981',
-            blue: '#3b82f6',
-            red: '#ef4444',
-            teal: '#14b8a6',
-            orange: '#f97316'
-        };
-
-        const chartColors = [
-            colors.purple,
-            colors.pink,
-            colors.amber,
-            colors.green,
-            colors.blue,
-            colors.red,
-            colors.teal,
-            colors.orange
-        ];
-
-        // Common configuration
-        const commonOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        };
-
-        // Q1: Primary Genre
-        new Chart(document.getElementById('q1Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['Pop', 'Rock', 'Hip-Hop/Rap', 'Electronic/EDM'],
-                datasets: [{
-                    data: [3, 3, 2, 2],
-                    backgroundColor: colors.purple,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Q2: Secondary Genre
-        new Chart(document.getElementById('q2Chart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Lo-fi', 'Jazz', 'Acoustic/Indie', 'Classical'],
-                datasets: [{
-                    data: [4, 3, 2, 1],
-                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2], chartColors[3]]
-                }]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Q3: Listening Context
-        new Chart(document.getElementById('q3Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['Studying/Working', 'Traveling', 'Exercise', 'Before sleeping'],
-                datasets: [{
-                    data: [3, 3, 2, 2],
-                    backgroundColor: colors.pink,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Q4: Device
-        new Chart(document.getElementById('q4Chart'), {
-            type: 'pie',
-            data: {
-                labels: ['Smartphone', 'Computer', 'Smart speaker'],
-                datasets: [{
-                    data: [6, 3, 1],
-                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2]]
-                }]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Q5: Artist Type
-        new Chart(document.getElementById('q5Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['Solo singer', 'Band/Group', 'Rapper', 'DJ/Producer'],
-                datasets: [{
-                    data: [3, 3, 2, 2],
-                    backgroundColor: colors.green,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Q6: Language
-        new Chart(document.getElementById('q6Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['English', 'Spanish', 'Other'],
-                datasets: [{
-                    data: [5, 4, 1],
-                    backgroundColor: colors.blue,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Q7: Frequency
-        new Chart(document.getElementById('q7Chart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Every day', 'Few times/week'],
-                datasets: [{
-                    data: [8, 2],
-                    backgroundColor: [chartColors[0], chartColors[1]]
-                }]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Q8: What Matters
-        new Chart(document.getElementById('q8Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['Rhythm/Beat', 'The lyrics', 'Message/Feeling'],
-                datasets: [{
-                    data: [4, 3, 3],
-                    backgroundColor: colors.amber,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-
-        // Q9: Discovery Method
-        new Chart(document.getElementById('q9Chart'), {
-            type: 'pie',
-            data: {
-                labels: ['Streaming apps', 'Social media', 'Friends/Family'],
-                datasets: [{
-                    data: [5, 3, 2],
-                    backgroundColor: [chartColors[0], chartColors[1], chartColors[2]]
-                }]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Q10: Genre to Explore
-        new Chart(document.getElementById('q10Chart'), {
-            type: 'bar',
-            data: {
-                labels: ['Latin/Reggaeton', 'Jazz/Blues', 'Metal/Rock', 'K-Pop/J-Pop'],
-                datasets: [{
-                    data: [4, 4, 1, 1],
-                    backgroundColor: colors.red,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                ...commonOptions,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
-</html>
+                                 </html>
